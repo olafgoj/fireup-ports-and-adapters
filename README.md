@@ -1,9 +1,20 @@
-# Instructions:
-App uses Postgres, kafka and schema registry. 
+# About
+Very simple app in hexagonal architecture. There is one domain event and CRUD for it. Besides that, for every change in the system, event to Kafka is fired. Events are in AVRO format.
 
+Keywords:
+- Java
+- Spring Boot
+- Docker compose
+- Kafka
+- AVRO schema registry
+- PostgreSQL
+
+# Instructions:
 There are two ways to start the app:
-1. Use `run.sh` load script
-2. Run manually using docker-compose from `docker` directory and after successful containers startup, run app from main directory:
+-  Use `run.sh` load script.
+   
+or
+-  Run manually using docker-compose from `docker` directory and after successful containers startup, run app from main directory:
 `./gradlew bootRun`
 
 
