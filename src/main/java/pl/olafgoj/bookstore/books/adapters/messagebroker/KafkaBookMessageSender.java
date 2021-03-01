@@ -14,14 +14,14 @@ import pl.olafgoj.bookstore.books.domain.model.Book;
 import pl.olafgoj.bookstore.books.domain.ports.BookMessageSender;
 
 @Component
-@RepositoryEventHandler(Book.class)
+@RepositoryEventHandler
 class KafkaBookMessageSender implements BookMessageSender {
 
     private final Logger LOG = LoggerFactory.getLogger(KafkaBookMessageSender.class);
     @Value("${app.books.topic}")
     private String topic;
 
-    private KafkaTemplate<String, BookMessage> kafkaTemplate;
+    private final KafkaTemplate<String, BookMessage> kafkaTemplate;
 
     KafkaBookMessageSender(final KafkaTemplate<String, BookMessage> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
@@ -30,7 +30,6 @@ class KafkaBookMessageSender implements BookMessageSender {
     @Override
     @HandleAfterCreate
     public void sendMessageForCreated(final Book book) {
-        LOG.info("Book with ID {} successfully created.", book.getId());
         BookMessage bookMessage = toBookMessage(book);
         LOG.info("Sending event for book #{} creation.", book.getId());
         kafkaTemplate.send(topic, bookMessage);
@@ -39,7 +38,6 @@ class KafkaBookMessageSender implements BookMessageSender {
     @Override
     @HandleAfterSave
     public void sendMessageForUpdated(final Book book) {
-        LOG.info("Book with ID {} successfully updated.", book.getId());
         BookMessage bookMessage = toBookMessage(book);
         LOG.info("Sending event for book #{} update.", book.getId());
         kafkaTemplate.send(topic, bookMessage);
@@ -48,7 +46,6 @@ class KafkaBookMessageSender implements BookMessageSender {
     @Override
     @HandleAfterDelete
     public void sendMessageForDeleted(final Book book) {
-        LOG.info("Book with ID {} successfully deleted.", book.getId());
         BookMessage bookMessage = toBookMessage(book);
         LOG.info("Sending event for book #{} deletion.", book.getId());
         kafkaTemplate.send(topic, bookMessage);
