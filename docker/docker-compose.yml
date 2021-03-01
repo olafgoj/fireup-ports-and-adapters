@@ -24,9 +24,6 @@ services:
     depends_on:
       - zookeeper
     ports:
-      # Exposes 29092 for external connections to the broker
-      # Use kafka1:9092 for connections internal on the docker network
-      # See https://rmoff.net/2018/08/02/kafka-listeners-explained/ for details
       - "29092:29092"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
@@ -39,7 +36,6 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_SCHEMA_REGISTRY_URL: "schemaregistry:8085"
-      #KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
       KAFKA_JMX_PORT: 9991
 
   schemaregistry:
