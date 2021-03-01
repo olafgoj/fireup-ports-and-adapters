@@ -1,0 +1,21 @@
+{
+  "namespace": "pl.olafgoj.bookstore.books.adapters.messagebroker.avro",
+  "type": "record",
+  "name": "BookMessage",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "avro.java.string": "String"
+    },
+    {
+      "name": "writer",
+      "type": "string",
+      "avro.java.string": "String"
+    }
+  ]
+}
